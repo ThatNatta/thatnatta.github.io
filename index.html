@@ -1,0 +1,39 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/19.1.1/cjs/react.production.min.js"></script>
+
+<script src="script.js"></script>
+<!-- This is my header  -->
+<h1>My Ranch </h1>
+
+<!-- This displays amount of coins and horses on the screen -->
+<p>Coins: <span id="coins">0</span></p>
+<p>Horses: <span id="horses">0</span></p>
+<p>Day: <span id="day">1</span></p>
+
+<!-- These are my interactable buttons  -->
+<button onclick="earn()">Work Ranch</button>
+<button onclick="getHorse()">Adopt A New Horse</button>
+<button onclick="seeHorses()">See Owned Horses</button>
+
+<div id="topButtons">
+<button onclick="rollover()">Next Day</button>
+<button onclick="restartGame()">Restart Game</button>
+</div>
+
+<style>
+#topButtons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+</style>
+
+<div id="horseList"></div>
+
+<div id="horseProfile" style="display:none;"></div>
+
+<div id="horseActions" style="display:none;">
+  <button onclick="brush()">Brush Horse</button>
+  <button onclick="feed()">Feed Horse</button>
+  <button onclick="water()">Water Horse</button>
+  <button onclick="train()">Train Horse</button>
+</div>
