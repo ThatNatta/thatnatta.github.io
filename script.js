@@ -100,6 +100,9 @@ function createHorse() {
 
   const Strength = Math.floor(Math.random() * 31);
 
+  const extension = randomChoice(Extension);
+  const agouti = randomChoice(Agouti);
+
   const coatColor = getCoatColor(
   extension,
   agouti
@@ -115,7 +118,9 @@ function createHorse() {
     agouti: randomChoice(Agouti),
     health: Health,
     strength: Strength,
-    coatColor: coatColor,
+    extension: extension,
+    agouti: agouti,
+    coatColor: coatColor
 
     fedToday: false,
     wateredToday: false,
