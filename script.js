@@ -395,8 +395,6 @@ function loadGame() {
   console.log("Game loaded!");
 }
 //end
-
-loadGame();
 //these are just so the console shows what pops up and not
 console.log(ownedHorses);
 //end
