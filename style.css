@@ -1,0 +1,19 @@
+.careButton {
+  background-color: lightgreen;
+}
+
+.dangerButton {
+  background-color: salmon;
+}
+
+.horseContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
