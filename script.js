@@ -9,7 +9,7 @@ const Agouti = ["AA", "Aa", "aa"];
 const breedImages = {
   Arabian: "images/breeds/arabian.png",
   Breton: "images/breeds/breton.png",
-  Shetland: "images/breeds/shetland.png",
+  Shetland: "images/breeds/shetland.png"
 };
 const coatImages = {
   Bay: "images/breeds/arabian/bay.png",
@@ -54,7 +54,7 @@ function getHorse() {
 
 //this is the script to display current horses in a list
 function seeHorses() {
-  if (ownedHorses < 1) {
+  if (ownedHorses.length < 1) {
     alert("You don't own any horses!");
     return;
   }
@@ -160,7 +160,9 @@ function visitHorse(index) {
   Strenght: ${getStrengthRating(horse.strength)}
   </p>
 
-<p> Genetics: ${getCoatColor(horse.coatColor)} </p>
+  <p>Extension: ${horse.extension}</p>
+  <p>Agouti: ${horse.agouti}</p>
+  <p>Color: ${horse.coatColor}</p>
 
   <button onclick="backToList()">
   Back 
