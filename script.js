@@ -13,7 +13,7 @@ const breedImages = {
 };
 const coatImages = {
   Bay: "images/arabian/bay.png",
-  Black: "images/shetlan/black.png",
+  Black: "images/shetland/black.png",
   Chestnut: "images/breton/chestnut.png"
 };
 //end
