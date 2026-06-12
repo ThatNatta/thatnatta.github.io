@@ -1,12 +1,21 @@
 //these are my attempts at creating classes and lists?
-const Gender = ["Mare", "Stallion", "Gelding"] //this is also a class but with more than one option
-const FemaleName =  ["Luna", "Ethel"]
-const MaleName =  ["Harry", "Pow"]
-const Age = ["Foal", "Yearling", "Adult", "Senior"]
-const Breed = ["Breton", "Shetland", "Arabian"]
-const Extension = ["EE", "Ee", "ee"]
-const Agouti = ["AA", "Aa", "aa"]
-const Modifiers = [""]
+const Gender = ["Mare", "Stallion", "Gelding"]; //this is also a class but with more than one option
+const FemaleName = ["Luna", "Ethel"];
+const MaleName = ["Harry", "Pow"];
+const Age = ["Foal", "Yearling", "Adult", "Senior"];
+const Breed = ["Breton", "Shetland", "Arabian"];
+const Extension = ["EE", "Ee", "ee"];
+const Agouti = ["AA", "Aa", "aa"];
+const breedImages = {
+  Arabian: "arabian.png",
+  Breton: "breton.png",
+  Shetland: "shetland.png",
+};
+const coatImages = {
+  Bay: "images/arabian/bay.png",
+  Black: "images/shetlan/black.png",
+  Chestnut: "images/breton/chestnut.png"
+};
 //end
 
 let currentHorseIndex = null;
@@ -18,14 +27,14 @@ let day = 1;
 
 //this is the script to earn money
 function earn() {
-    coins += 10;
-    document.getElementById("coins").textContent = coins;
-    saveGame();
+  coins += 10;
+  document.getElementById("coins").textContent = coins;
+  saveGame();
 }
 
 //this is the script to buy a horse
 function getHorse() {
-  if (coins < 100) { 
+  if (coins < 100) {
     alert("Not enough coins!");
     return;
   }
@@ -45,11 +54,10 @@ function getHorse() {
 
 //this is the script to display current horses in a list
 function seeHorses() {
-
   if (ownedHorses < 1) {
-    alert("You don't own any horses!")  
-    return; 
-    }
+    alert("You don't own any horses!");
+    return;
+  }
 
   const horseList = document.getElementById("horseList");
 
@@ -58,8 +66,7 @@ function seeHorses() {
 
   // Add each horse
   ownedHorses.forEach((horse, index) => {
-
-horseList.innerHTML += `
+    horseList.innerHTML += `
   <p>
     <button onclick="visitHorse(${index})">
       Visit
@@ -74,8 +81,8 @@ horseList.innerHTML += `
 
 function randomChoice(list) {
   return list[Math.floor(Math.random() * list.length)];
- }
- //end
+}
+//end
 
 //this is where it creates the actual horse
 function createHorse() {
@@ -93,6 +100,11 @@ function createHorse() {
 
   const Strength = Math.floor(Math.random() * 31);
 
+  const coatColor = getCoatColor(
+  extension,
+  agouti
+);
+
   return {
     id: Date.now(),
     name: name,
@@ -103,20 +115,22 @@ function createHorse() {
     agouti: randomChoice(Agouti),
     health: Health,
     strength: Strength,
+    coatColor: coatColor,
 
-
-  fedToday: false,
-  wateredToday: false,
-  brushedToday: false
+    fedToday: false,
+    wateredToday: false,
+    brushedToday: false,
   };
- }
+}
 // {}
 
 function visitHorse(index) {
-
   currentHorseIndex = index;
 
   const horse = ownedHorses[index];
+
+  const breedImage = breedImages[horse.breed];
+  const coatImage = coatImages[horse.coatColor]
 
   document.getElementById("horseActions").style.display = "block";
 
@@ -124,9 +138,11 @@ function visitHorse(index) {
 
   document.getElementById("horseProfile").style.display = "block";
 
-  document.getElementById("horseProfile").innerHTML = 
-  `<h2>${horse.name}</h2>
-
+  document.getElementById("horseProfile").innerHTML = `<h2>${horse.name}</h2>
+<div class="horseContainer">
+  <img class="layer" src="${horse.breedImage}">
+  <img class="layer" src="${horse.coatImage}">
+</div>
   <p>Gender: ${horse.gender}</p>
   <p>Age: ${horse.age}</p>
   <p>Breed: ${horse.breed}</p>
@@ -139,7 +155,7 @@ function visitHorse(index) {
   Strenght: ${getStrengthRating(horse.strength)}
   </p>
 
-<p> Genetics: ${horse.extension} ${horse.agouti} </p>
+<p> Genetics: ${getCoatColor(horse.coatColor)} </p>
 
   <button onclick="backToList()">
   Back 
@@ -160,7 +176,7 @@ function getHealthRating(health) {
   if (health <= 10) {
     return "Poor";
   }
-  if (health <=20) {
+  if (health <= 20) {
     return "Adequate";
   }
   return "Excellent";
@@ -170,14 +186,25 @@ function getStrengthRating(strength) {
   if (strength <= 10) {
     return "Poor";
   }
-  if (strength <=20) {
+  if (strength <= 20) {
     return "Adequate";
   }
   return "Excellent";
 }
 
-function brush() {
+function getCoatColor(extension, agouti) {
+  if (extension === "ee") {
+    return "Chestnut";
+  }
 
+  if ((extension === "EE" || extension === "Ee") && agouti === "aa") {
+    return "Black";
+  }
+
+  return "Bay";
+}
+
+function brush() {
   if (currentHorseIndex === null) {
     alert("Visit a horse first!");
     return;
@@ -185,7 +212,7 @@ function brush() {
 
   const horse = ownedHorses[currentHorseIndex];
 
-      if (horse.brushedToday === true) {
+  if (horse.brushedToday === true) {
     alert("Horse has already been brushed today!");
     return;
   }
@@ -200,21 +227,18 @@ function brush() {
 
   visitHorse(currentHorseIndex);
 
-  console.log(
-    horse.name + " was brushed. Health is now " + horse.health
-  );
+  console.log(horse.name + " was brushed. Health is now " + horse.health);
 }
 
-  function feed() {
-
+function feed() {
   if (currentHorseIndex === null) {
     alert("Visit a horse first!");
     return;
   }
 
-    const horse = ownedHorses[currentHorseIndex];
+  const horse = ownedHorses[currentHorseIndex];
 
-    if (horse.fedToday === true) {
+  if (horse.fedToday === true) {
     alert("Horse has already been fed today!");
     return;
   }
@@ -229,13 +253,10 @@ function brush() {
 
   visitHorse(currentHorseIndex);
 
-  console.log(
-    horse.name + " was fed. Health is now " + horse.health
-  );
+  console.log(horse.name + " was fed. Health is now " + horse.health);
 }
 
-  function water() {
-
+function water() {
   if (currentHorseIndex === null) {
     alert("Visit a horse first!");
     return;
@@ -243,7 +264,7 @@ function brush() {
 
   const horse = ownedHorses[currentHorseIndex];
 
-    if (horse.wateredToday === true) {
+  if (horse.wateredToday === true) {
     alert("Horse has already been given water today!");
     return;
   }
@@ -256,15 +277,12 @@ function brush() {
 
   visitHorse(currentHorseIndex);
 
-  console.log(
-    horse.name + " was given water. Health is now " + horse.health
-  );
-  
+  console.log(horse.name + " was given water. Health is now " + horse.health);
+
   saveGame();
 }
 
-  function train() {
-
+function train() {
   if (currentHorseIndex === null) {
     alert("Visit a horse first!");
     return;
@@ -282,35 +300,30 @@ function brush() {
 
   visitHorse(currentHorseIndex);
 
-  console.log(
-    horse.name + " was trained. Strength is now " + horse.strength
-  );
+  console.log(horse.name + " was trained. Strength is now " + horse.strength);
 }
 
 function rollover() {
-
   day++;
 
   document.getElementById("day").textContent = day;
 
-ownedHorses.forEach(horse => {
+  ownedHorses.forEach((horse) => {
+    if (!horse.fedToday) {
+      horse.health -= 2;
+    }
 
-  if (!horse.fedToday) {
-    horse.health -= 2;
-  }
+    if (!horse.wateredToday) {
+      horse.health -= 2;
+    }
 
-  if (!horse.wateredToday) {
-    horse.health -= 2;
-  }
+    if (!horse.brushedToday) {
+      horse.health -= 1;
+    }
 
-  if (!horse.brushedToday) {
-    horse.health -= 1;
-  }
-
-  horse.fedToday = false;
-  horse.wateredToday = false;
-  horse.brushedToday = false;
-
+    horse.fedToday = false;
+    horse.wateredToday = false;
+    horse.brushedToday = false;
   });
 
   saveGame();
@@ -319,9 +332,8 @@ ownedHorses.forEach(horse => {
 }
 
 function restartGame() {
-
   const confirmed = confirm(
-    "Are you sure you want to delete your ranch and start over?"
+    "Are you sure you want to delete your ranch and start over?",
   );
 
   if (!confirmed) {
@@ -350,25 +362,20 @@ function restartGame() {
   saveGame();
 }
 
-//this part saves the game locally 
+//this part saves the game locally
 function saveGame() {
-
   const gameData = {
     coins: coins,
     day: day,
-    ownedHorses: ownedHorses
+    ownedHorses: ownedHorses,
   };
 
-  localStorage.setItem(
-    "myRanchSave",
-    JSON.stringify(gameData)
-  );
+  localStorage.setItem("myRanchSave", JSON.stringify(gameData));
 }
 //end
 
 //this part loads the game after a reload
 function loadGame() {
-
   const saveData = localStorage.getItem("myRanchSave");
 
   if (!saveData) {
@@ -389,7 +396,7 @@ function loadGame() {
 }
 //end
 
-  loadGame();
+loadGame();
 //these are just so the console shows what pops up and not
 console.log(ownedHorses);
 //end
