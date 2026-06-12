@@ -140,8 +140,8 @@ function visitHorse(index) {
 
   document.getElementById("horseProfile").innerHTML = `<h2>${horse.name}</h2>
 <div class="horseContainer">
-  <img class="layer" src="${horse.breedImage}">
-  <img class="layer" src="${horse.coatImage}">
+<img class="layer" src="${breedImage}">
+<img class="layer" src="${coatImage}">
 </div>
   <p>Gender: ${horse.gender}</p>
   <p>Age: ${horse.age}</p>
