@@ -7,14 +7,14 @@ const Breed = ["Breton", "Shetland", "Arabian"];
 const Extension = ["EE", "Ee", "ee"];
 const Agouti = ["AA", "Aa", "aa"];
 const breedImages = {
-  Arabian: "arabian.png",
-  Breton: "breton.png",
-  Shetland: "shetland.png",
+  Arabian: "images/breeds/arabian.png",
+  Breton: "images/breeds/breton.png",
+  Shetland: "images/breeds/shetland.png",
 };
 const coatImages = {
-  Bay: "images/arabian/bay.png",
-  Black: "images/shetland/black.png",
-  Chestnut: "images/breton/chestnut.png"
+  Bay: "images/breeds/arabian/bay.png",
+  Black: "images/breeds/shetland/black.png",
+  Chestnut: "images/breeds/breton/chestnut.png"
 };
 //end
 
